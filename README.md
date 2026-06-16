@@ -1,5 +1,7 @@
 # Pankaj Pal - Full Stack Developer Portfolio
 
+**[🔴 Live Demo: pankaj122002.github.io/Portfolio](https://pankaj122002.github.io/Portfolio/)**
+
 A highly interactive, modern, and visually stunning 3D developer portfolio built with React, Three.js, and GSAP. Designed to showcase projects, skills, and professional experience with a futuristic, "Apple-like" premium aesthetic.
 
 ## 🚀 Features
@@ -43,8 +45,8 @@ src/
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/<your-username>/<your-repo>.git
-   cd <your-repo>
+   git clone https://github.com/Pankaj122002/Portfolio.git
+   cd Portfolio
    ```
 
 2. **Install dependencies:**
@@ -66,13 +68,11 @@ src/
 
 ## 🚀 Deployment
 
-This project can be fully deployed as a static site (e.g., GitHub Pages, Vercel, Netlify).
+This project is fully deployed as a static site on **GitHub Pages**.
 
-**Deploying to GitHub Pages:**
-1. In `vite.config.ts`, add: `base: '/your-repo-name/'`
-2. Run `npm run build`
-3. Push your code to GitHub.
-4. Set up a GitHub Actions workflow or push the `dist` folder to your `gh-pages` branch.
+**How it's currently deployed:**
+1. The `vite.config.ts` includes `base: '/Portfolio/'` to handle the GitHub Pages subdirectory routing.
+2. An automated **GitHub Actions** workflow runs `npm run build` and publishes the `dist` folder directly to GitHub Pages on every push to the `main` branch.
 
 ## 📄 License
 This project is open-source and available under the [MIT License](LICENSE).
