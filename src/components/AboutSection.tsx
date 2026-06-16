@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { User } from 'lucide-react';
 
 const lines = [
   { text: "I'm a Full Stack Developer based in Delhi NCR.", highlight: 'Full Stack Developer' },
@@ -138,6 +139,20 @@ export default function AboutSection() {
               <p className="text-muted text-xs tracking-wide uppercase">{stat.label}</p>
             </div>
           ))}
+        </div>
+
+        {/* Detailed Resume CTA */}
+        <div className="mt-12 flex justify-center">
+          <a
+            href="https://pankaj122002.github.io/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-pill"
+            style={{ opacity: 0.9 }}
+          >
+            <User className="w-4 h-4 mr-1.5" />
+            View Detailed Resume
+          </a>
         </div>
       </div>
     </section>

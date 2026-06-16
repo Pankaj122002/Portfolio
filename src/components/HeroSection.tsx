@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Github, Linkedin, Mail, MessageCircle, ChevronDown } from 'lucide-react';
+import { Github, Linkedin, Mail, MessageCircle, ChevronDown, User } from 'lucide-react';
 
 const roles = [
   '.NET Developer',
@@ -138,6 +138,7 @@ export default function HeroSection() {
         {[
           { icon: Github, href: 'https://github.com/Pankaj122002', label: 'GitHub' },
           { icon: Linkedin, href: 'https://www.linkedin.com/in/pankajpal12/', label: 'LinkedIn' },
+          { icon: User, href: 'https://pankaj122002.github.io/', label: 'Detailed Resume' },
           { icon: Mail, href: 'mailto:pankajpal01022002@gmail.com', label: 'Email' },
           { icon: MessageCircle, href: 'https://wa.me/918954040631', label: 'WhatsApp' },
         ].map(({ icon: Icon, href, label }) => (

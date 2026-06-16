@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, ArrowUp } from 'lucide-react';
+import { Github, Linkedin, Mail, ArrowUp, User } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -20,6 +20,7 @@ export default function Footer() {
           {[
             { icon: Github, href: 'https://github.com/Pankaj122002', label: 'GitHub' },
             { icon: Linkedin, href: 'https://www.linkedin.com/in/pankajpal12/', label: 'LinkedIn' },
+            { icon: User, href: 'https://pankaj122002.github.io/', label: 'Detailed Resume' },
             { icon: Mail, href: 'mailto:pankajpal01022002@gmail.com', label: 'Email' },
           ].map(({ icon: Icon, href, label }) => (
             <a key={label} href={href}
