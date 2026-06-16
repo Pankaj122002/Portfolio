@@ -124,7 +124,7 @@ export default function IntroExperience({ onComplete }: { onComplete: () => void
     <div className="fixed inset-0 z-[100] pointer-events-none bg-black flex items-center justify-center">
       <canvas 
         ref={canvasRef} 
-        className="w-full h-full object-cover opacity-50" 
+        className="w-full h-full object-cover opacity-70" 
       />
       
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center text-white pointer-events-none opacity-0" id="intro-typography">

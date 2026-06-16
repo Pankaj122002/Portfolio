@@ -106,7 +106,7 @@ export default function Navigation() {
           {[0, 1, 2].map((i) => (
             <span
               key={i}
-              className="w-5 h-0.5 bg-apple block transition-transform duration-300"
+              className="w-5 h-0.5 bg-[#F5F5F7] block transition-transform duration-300"
               style={{
                 transform: mobileOpen
                   ? i === 0 ? 'rotate(45deg) translate(3px,3px)' : i === 1 ? 'scaleX(0)' : 'rotate(-45deg) translate(3px,-3px)'

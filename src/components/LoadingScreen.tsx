@@ -43,14 +43,14 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
     };
 
     // First P (offset left)
-    const ox1 = -1.4;
+    const ox1 = -1.25;
     linePts(ox1, -1.0, ox1, 1.0, 15);
     linePts(ox1, 1.0, ox1 + 0.35, 1.0, 6);
     arcPts(ox1 + 0.35, 0.55, 0.45, Math.PI / 2, -Math.PI / 2, 12);
     linePts(ox1 + 0.35, 0.1, ox1, 0.1, 6);
 
     // Second P (offset right)
-    const ox2 = 0.3;
+    const ox2 = 0.45;
     linePts(ox2, -1.0, ox2, 1.0, 15);
     linePts(ox2, 1.0, ox2 + 0.35, 1.0, 6);
     arcPts(ox2 + 0.35, 0.55, 0.45, Math.PI / 2, -Math.PI / 2, 12);
