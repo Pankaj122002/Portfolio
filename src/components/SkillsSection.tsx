@@ -4,7 +4,7 @@ const skillGroups = [
   {
     group: 'Frontend',
     color: '#4F46E5',
-    skills: ['Angular', 'TypeScript', 'HTML/CSS', 'Tailwind', 'Bootstrap', 'ECharts', 'Chart.js'],
+    skills: ['React.js', 'Angular', 'TypeScript', 'Vite', 'HTML/CSS', 'Tailwind', 'Three.js', 'ECharts'],
   },
   {
     group: 'Backend',

@@ -13,6 +13,9 @@ const tech = [
   { name: 'Postman', color: '#FF6C37' },
   { name: 'VS Code', color: '#007ACC' },
   { name: 'Streamlit', color: '#FF4B4B' },
+  { name: 'React.js', color: '#61DAFB' },
+  { name: 'Vite', color: '#646CFF' },
+  { name: 'Three.js', color: '#FFFFFF' },
 ];
 
 function Item({ name, color }: { name: string; color: string }) {
