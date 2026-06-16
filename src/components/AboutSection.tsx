@@ -7,8 +7,7 @@ const bullets = [
   { text: "Delivered 7+ real-time dashboards visualizing high-frequency metrics.", highlight: "real-time dashboards" },
   { text: "Trained Python Machine Learning models achieving 85%+ accuracy.", highlight: "85%+ accuracy" },
   { text: "Deployed containerized applications via Docker with automated CI/CD.", highlight: "Docker" },
-  { text: "Skilled in prompt engineering to maximize AI productivity.", highlight: "AI productivity" },
-  { text: "Built this highly interactive 3D portfolio using React.js, Vite, Three.js, and Tailwind CSS.", highlight: "React.js, Vite, Three.js" }
+  { text: "Skilled in prompt engineering to maximize AI productivity.", highlight: "AI productivity" }
 ];
 
 const stats = [
@@ -83,7 +82,7 @@ function RevealBullet({ text, highlight, index }: { text: string; highlight: str
   return (
     <li
       ref={ref}
-      className="relative flex items-start text-lg md:text-xl text-white/95 font-light leading-relaxed mb-8"
+      className="relative flex items-start text-base md:text-lg text-white/95 font-light leading-relaxed mb-4"
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? 'translateY(0)' : 'translateY(20px)',
@@ -98,7 +97,7 @@ function RevealBullet({ text, highlight, index }: { text: string; highlight: str
 
 export default function AboutSection() {
   return (
-    <section id="about" className="relative py-16 px-4 md:px-8" style={{ zIndex: 10 }}>
+    <section id="about" className="relative py-10 px-4 md:px-8" style={{ zIndex: 10 }}>
       {/* Subtle top separator */}
       <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)' }} />
 
@@ -122,11 +121,11 @@ export default function AboutSection() {
         </div>
 
         {/* Story lines — each reveals on scroll */}
-        <div className="relative pl-8 md:pl-10 mb-16 mt-12 max-w-5xl">
+        <div className="relative pl-8 md:pl-10 mb-10 mt-8 max-w-5xl">
           {/* Vertical Golden Line */}
           <div className="absolute top-2 bottom-2 left-0 w-1" style={{ background: 'linear-gradient(to bottom, #FCD34D, rgba(252,211,77,0.1))', borderRadius: '4px' }} />
           
-          <ul className="space-y-6">
+          <ul className="space-y-4">
             {bullets.map((b, i) => (
               <RevealBullet key={i} text={b.text} highlight={b.highlight} index={i} />
             ))}
@@ -152,7 +151,7 @@ export default function AboutSection() {
         </div>
 
         {/* Detailed Resume CTA */}
-        <div className="mt-12 flex justify-center">
+        <div className="mt-8 flex justify-center">
           <a
             href="https://pankaj122002.github.io/"
             target="_blank"
