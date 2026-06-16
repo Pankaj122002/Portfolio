@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
-import { User } from 'lucide-react';
+import { User, ChevronRight } from 'lucide-react';
 
-const lines = [
-  { text: "I'm a Full Stack Developer based in Delhi NCR.", highlight: 'Full Stack Developer' },
-  { text: 'At Rossarah Services, I monitor 8+ IoT energy meters — live.', highlight: 'IoT energy meters' },
-  { text: '30+ API endpoints. Sub-200ms. 40% faster queries.', highlight: '40% faster' },
-  { text: 'Before that — ML models. 85% accuracy. Streamlit dashboards.', highlight: '85% accuracy' },
-  { text: 'I build with Angular, .NET, Docker, and AI tools every day.', highlight: 'Angular, .NET, Docker' },
+const bullets = [
+  "Full Stack .NET Developer with 1+ year of experience designing and shipping full-stack web applications using .NET Framework, ASP.NET Web API, ASP.NET MVC, SQL Server, and JavaScript across 8+ integrated energy meters.",
+  "Engineered SQL Server databases, stored procedures, and window functions that process high-frequency IoT readings from multiple devices with sub-second query response times.",
+  "Delivered 7+ real-time ECharts dashboards visualizing power, voltage, and run-hour metrics, reducing manual monitoring effort for the operations team.",
+  "Experienced in Python data analysis and machine learning, training models that achieved 85%+ accuracy on medical and quality prediction datasets using scikit-learn.",
+  "Hands-on production deployment experience — hosted ASP.NET apps on cloud Windows Server (IIS 10.0) and deployed containerized apps via Docker and Render with automated CI/CD workflows.",
+  "Proficient in Git/GitHub for version control, branching strategies, and repository maintenance.",
+  "Familiar with object-oriented programming (OOPs) and data structures.",
+  "Capable of building and debugging applications end-to-end using AI models; skilled at prompt engineering to maximize AI productivity and output quality."
 ];
 
 const stats = [
@@ -43,51 +46,32 @@ function AnimatedCount({ target, suffix }: { target: number; suffix: string }) {
   return <div ref={ref} className="tabular-nums">{count}{suffix}</div>;
 }
 
-function RevealLine({ text, highlight, index }: { text: string; highlight: string | null; index: number }) {
+function RevealBullet({ text, index }: { text: string; index: number }) {
   const [visible, setVisible] = useState(false);
-  const ref = useRef<HTMLParagraphElement>(null);
+  const ref = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
     const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, {
-      threshold: 0.3,
-      rootMargin: '-80px 0px',
+      threshold: 0.1,
+      rootMargin: '-50px 0px',
     });
     if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
   }, []);
 
-  const renderText = () => {
-    if (!highlight) return text;
-    const idx = text.indexOf(highlight);
-    if (idx === -1) return text;
-    return (
-      <>
-        {text.slice(0, idx)}
-        <span 
-          className="font-semibold" 
-          style={{ color: '#60A5FA', margin: '0 2px' }}
-        >
-          {highlight}
-        </span>
-        {text.slice(idx + highlight.length)}
-      </>
-    );
-  };
-
   return (
-    <p
+    <li
       ref={ref}
-      className="font-body font-light tracking-wide leading-relaxed mb-8"
+      className="relative flex items-start text-sm md:text-base text-gray-300 font-light leading-relaxed mb-6"
       style={{
-        fontSize: 'clamp(18px, 2.5vw, 28px)',
-        color: 'rgba(255, 255, 255, 0.9)',
         opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(32px)',
-        transition: `opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 0.1}s, transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 0.1}s`,
+        transform: visible ? 'translateY(0)' : 'translateY(20px)',
+        transition: `opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 0.05}s, transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 0.05}s`,
       }}
     >
-      {renderText()}
-    </p>
+      <ChevronRight className="w-4 h-4 mr-3 mt-1 flex-shrink-0 text-[#FCD34D] opacity-70" />
+      <span>{text}</span>
+    </li>
   );
 }
 
@@ -117,10 +101,15 @@ export default function AboutSection() {
         </div>
 
         {/* Story lines — each reveals on scroll */}
-        <div className="space-y-2 mb-10">
-          {lines.map((line, i) => (
-            <RevealLine key={i} {...line} index={i} />
-          ))}
+        <div className="relative pl-6 md:pl-8 mb-12 mt-8">
+          {/* Vertical Golden Line */}
+          <div className="absolute top-2 bottom-2 left-0 w-px" style={{ background: 'linear-gradient(to bottom, #FCD34D, rgba(252,211,77,0.1))' }} />
+          
+          <ul className="space-y-2">
+            {bullets.map((text, i) => (
+              <RevealBullet key={i} text={text} index={i} />
+            ))}
+          </ul>
         </div>
 
         {/* Stats row */}
