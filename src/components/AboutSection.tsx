@@ -7,7 +7,8 @@ const bullets = [
   { text: "Delivered 7+ real-time dashboards visualizing high-frequency metrics.", highlight: "real-time dashboards" },
   { text: "Trained Python Machine Learning models achieving 85%+ accuracy.", highlight: "85%+ accuracy" },
   { text: "Deployed containerized applications via Docker with automated CI/CD.", highlight: "Docker" },
-  { text: "Skilled in prompt engineering to maximize AI productivity.", highlight: "AI productivity" }
+  { text: "Skilled in prompt engineering to maximize AI productivity.", highlight: "AI productivity" },
+  { text: "Built this highly interactive 3D portfolio using React.js, Vite, Three.js, and Tailwind CSS.", highlight: "React.js, Vite, Three.js" }
 ];
 
 const stats = [
