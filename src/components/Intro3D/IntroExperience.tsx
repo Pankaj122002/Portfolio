@@ -19,7 +19,7 @@ export default function IntroExperience({ onComplete }: { onComplete: () => void
 
   // 1. Fetch metadata
   useEffect(() => {
-    fetch('/optimized-photos/metadata.json')
+    fetch(`${import.meta.env.BASE_URL}optimized-photos/metadata.json`)
       .then(res => res.json())
       .then(data => setPhotos(data))
       .catch(console.error);
@@ -40,9 +40,11 @@ export default function IntroExperience({ onComplete }: { onComplete: () => void
 
     const images: HTMLImageElement[] = [];
     
+    const stripSlash = (p: string) => p.startsWith('/') ? p.slice(1) : p;
+
     // Load first frame immediately
     const firstImg = new Image();
-    firstImg.src = photos[0].url;
+    firstImg.src = `${import.meta.env.BASE_URL}${stripSlash(photos[0].url)}`;
     firstImg.onload = () => {
       ctx.drawImage(firstImg, 0, 0, canvas.width, canvas.height);
       images[0] = firstImg;
@@ -51,7 +53,7 @@ export default function IntroExperience({ onComplete }: { onComplete: () => void
       let loadedCount = 1;
       for (let i = 1; i < photos.length; i++) {
         const img = new Image();
-        img.src = photos[i].url;
+        img.src = `${import.meta.env.BASE_URL}${stripSlash(photos[i].url)}`;
         img.onload = () => {
           loadedCount++;
           // Start animation once all or a sufficient chunk is loaded
