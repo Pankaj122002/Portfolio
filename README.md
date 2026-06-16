@@ -10,7 +10,7 @@ A highly interactive, modern, and visually stunning 3D developer portfolio built
 * **Smooth Animations**: High-performance scrolling and micro-animations powered by GSAP and Framer Motion.
 * **Responsive Design**: Flawless layout on desktop, tablet, and mobile viewing using Tailwind CSS and CSS `clamp()`.
 * **Dark Theme UI**: Premium aesthetic with deep blacks, dynamic glassmorphism cards, and sophisticated typography mixing Sans-Serif and elegant Serif fonts.
-* **Backend Integration**: Fully working Contact Form synced with Supabase Backend-as-a-Service.
+* **Contact Integration**: Form data is automatically formatted and redirected to WhatsApp or Email directly.
 
 ## 💻 Tech Stack
 * **Framework**: [React.js](https://react.dev/) (v18)
@@ -20,14 +20,13 @@ A highly interactive, modern, and visually stunning 3D developer portfolio built
 * **3D & Canvas**: [Three.js](https://threejs.org/), [@react-three/fiber](https://docs.pmnd.rs/react-three-fiber), [@react-three/drei](https://github.com/pmndrs/drei)
 * **Animations**: [GSAP](https://gsap.com/), [Framer Motion](https://www.framer.com/motion/)
 * **Smooth Scrolling**: [Lenis](https://lenis.studiofreight.com/)
-* **Database / Backend**: [Supabase](https://supabase.com/)
 
 ## 📂 Project Structure
 ```text
 src/
 ├── components/          # Reusable UI sections
 │   ├── AboutSection.tsx # Typography-heavy bio section
-│   ├── ContactSection.tsx # Supabase-integrated contact form
+│   ├── ContactSection.tsx # Contact form with WhatsApp/Email redirect
 │   ├── ExperienceSection.tsx # Horizontal scrolling career timeline
 │   ├── HeroSection.tsx  # Landing view
 │   ├── Intro3D/         # Complex 3D cinematic canvas elements
@@ -54,14 +53,7 @@ src/
    npm install
    ```
 
-3. **Environment Variables:**
-   Create a `.env` file in the root directory and add your Supabase credentials:
-   ```env
-   VITE_SUPABASE_URL=your-supabase-url
-   VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
-   ```
-
-4. **Start the development server:**
+3. **Start the development server:**
    ```bash
    npm run dev
    ```

@@ -12,13 +12,18 @@ export default function ContactSection() {
   const change = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
     setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
 
-  const submit = async (e: React.FormEvent) => {
+  const sendViaWhatsApp = (e: React.MouseEvent) => {
     e.preventDefault();
-    setSending(true);
-    await new Promise((r) => setTimeout(r, 1400));
-    setSending(false);
-    setSent(true);
-    setTimeout(() => { setSent(false); setForm({ name: '', email: '', phone: '', budget: budgets[0], message: '' }); }, 3500);
+    if (!form.name || !form.message) return alert("Please fill in at least your name and message.");
+    const text = encodeURIComponent(`Hi Pankaj,\n\nI'm reaching out from your portfolio site:\n\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\nBudget: ${form.budget}\n\nMessage:\n${form.message}`);
+    window.open(`https://wa.me/918954040631?text=${text}`, '_blank');
+  };
+
+  const sendViaEmail = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!form.name || !form.message) return alert("Please fill in at least your name and message.");
+    const body = encodeURIComponent(`Hi Pankaj,\n\nI'm reaching out from your portfolio site:\n\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\nBudget: ${form.budget}\n\nMessage:\n${form.message}`);
+    window.open(`mailto:pankajpal01022002@gmail.com?subject=Portfolio Inquiry from ${form.name}&body=${body}`, '_blank');
   };
 
   return (
@@ -57,7 +62,7 @@ export default function ContactSection() {
                 <p className="text-muted text-sm text-center">I&apos;ll reply within 24 hours.</p>
               </div>
             ) : (
-              <form onSubmit={submit} className="space-y-2 flex flex-col flex-1">
+              <form className="space-y-2 flex flex-col flex-1">
                 {[
                   { id: 'name', label: 'Name', type: 'text', placeholder: 'Your name' },
                   { id: 'email', label: 'Email', type: 'email', placeholder: 'your@email.com' },
@@ -98,16 +103,21 @@ export default function ContactSection() {
                   />
                 </div>
 
-                <button
-                  type="submit" disabled={sending}
-                  className="btn-pill w-full justify-center disabled:opacity-50 mt-auto"
-                >
-                  {sending ? (
-                    <><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Sending...</>
-                  ) : (
-                    <><Send className="w-4 h-4" />Send Message</>
-                  )}
-                </button>
+                <div className="flex gap-3 mt-auto pt-2">
+                  <button
+                    type="button" onClick={sendViaWhatsApp}
+                    className="btn-pill flex-1 justify-center"
+                    style={{ background: 'rgba(34, 197, 94, 0.1)', borderColor: 'rgba(34, 197, 94, 0.2)', color: '#4ade80' }}
+                  >
+                    <Send className="w-4 h-4" /> WhatsApp
+                  </button>
+                  <button
+                    type="button" onClick={sendViaEmail}
+                    className="btn-pill flex-1 justify-center"
+                  >
+                    <Mail className="w-4 h-4" /> Email
+                  </button>
+                </div>
               </form>
             )}
           </div>
