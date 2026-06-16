@@ -66,7 +66,11 @@ function RevealBullet({ text, highlight, index }: { text: string; highlight: str
         {text.slice(0, idx)}
         <span 
           className="font-semibold" 
-          style={{ color: '#60A5FA', margin: '0 2px' }}
+          style={{ 
+            color: '#60A5FA', 
+            textShadow: '0 0 15px rgba(96, 165, 250, 0.6)', 
+            margin: '0 4px' 
+          }}
         >
           {highlight}
         </span>
@@ -78,7 +82,7 @@ function RevealBullet({ text, highlight, index }: { text: string; highlight: str
   return (
     <li
       ref={ref}
-      className="relative flex items-start text-sm md:text-base text-gray-300 font-light leading-relaxed mb-6"
+      className="relative flex items-start text-lg md:text-xl text-white/95 font-light leading-relaxed mb-8"
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? 'translateY(0)' : 'translateY(20px)',
@@ -117,11 +121,11 @@ export default function AboutSection() {
         </div>
 
         {/* Story lines — each reveals on scroll */}
-        <div className="relative pl-6 md:pl-8 mb-12 mt-8">
+        <div className="relative pl-8 md:pl-10 mb-16 mt-12 max-w-5xl">
           {/* Vertical Golden Line */}
-          <div className="absolute top-2 bottom-2 left-0 w-px" style={{ background: 'linear-gradient(to bottom, #FCD34D, rgba(252,211,77,0.1))' }} />
+          <div className="absolute top-2 bottom-2 left-0 w-1" style={{ background: 'linear-gradient(to bottom, #FCD34D, rgba(252,211,77,0.1))', borderRadius: '4px' }} />
           
-          <ul className="space-y-2">
+          <ul className="space-y-6">
             {bullets.map((b, i) => (
               <RevealBullet key={i} text={b.text} highlight={b.highlight} index={i} />
             ))}
