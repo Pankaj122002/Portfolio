@@ -2,14 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import { User, ChevronRight } from 'lucide-react';
 
 const bullets = [
-  "Full Stack .NET Developer with 1+ year of experience designing and shipping full-stack web applications using .NET Framework, ASP.NET Web API, ASP.NET MVC, SQL Server, and JavaScript across 8+ integrated energy meters.",
-  "Engineered SQL Server databases, stored procedures, and window functions that process high-frequency IoT readings from multiple devices with sub-second query response times.",
-  "Delivered 7+ real-time ECharts dashboards visualizing power, voltage, and run-hour metrics, reducing manual monitoring effort for the operations team.",
-  "Experienced in Python data analysis and machine learning, training models that achieved 85%+ accuracy on medical and quality prediction datasets using scikit-learn.",
-  "Hands-on production deployment experience — hosted ASP.NET apps on cloud Windows Server (IIS 10.0) and deployed containerized apps via Docker and Render with automated CI/CD workflows.",
-  "Proficient in Git/GitHub for version control, branching strategies, and repository maintenance.",
-  "Familiar with object-oriented programming (OOPs) and data structures.",
-  "Capable of building and debugging applications end-to-end using AI models; skilled at prompt engineering to maximize AI productivity and output quality."
+  { text: "Full Stack .NET Developer building apps for 8+ integrated energy meters.", highlight: "Full Stack .NET Developer" },
+  { text: "Engineered SQL Server databases with sub-second IoT query response.", highlight: "sub-second IoT query" },
+  { text: "Delivered 7+ real-time dashboards visualizing high-frequency metrics.", highlight: "real-time dashboards" },
+  { text: "Trained Python Machine Learning models achieving 85%+ accuracy.", highlight: "85%+ accuracy" },
+  { text: "Deployed containerized applications via Docker with automated CI/CD.", highlight: "Docker" },
+  { text: "Skilled in prompt engineering to maximize AI productivity.", highlight: "AI productivity" }
 ];
 
 const stats = [
@@ -46,7 +44,7 @@ function AnimatedCount({ target, suffix }: { target: number; suffix: string }) {
   return <div ref={ref} className="tabular-nums">{count}{suffix}</div>;
 }
 
-function RevealBullet({ text, index }: { text: string; index: number }) {
+function RevealBullet({ text, highlight, index }: { text: string; highlight: string; index: number }) {
   const [visible, setVisible] = useState(false);
   const ref = useRef<HTMLLIElement>(null);
 
@@ -59,6 +57,24 @@ function RevealBullet({ text, index }: { text: string; index: number }) {
     return () => obs.disconnect();
   }, []);
 
+  const renderText = () => {
+    if (!highlight) return text;
+    const idx = text.indexOf(highlight);
+    if (idx === -1) return text;
+    return (
+      <>
+        {text.slice(0, idx)}
+        <span 
+          className="font-semibold" 
+          style={{ color: '#60A5FA', margin: '0 2px' }}
+        >
+          {highlight}
+        </span>
+        {text.slice(idx + highlight.length)}
+      </>
+    );
+  };
+
   return (
     <li
       ref={ref}
@@ -70,7 +86,7 @@ function RevealBullet({ text, index }: { text: string; index: number }) {
       }}
     >
       <ChevronRight className="w-4 h-4 mr-3 mt-1 flex-shrink-0 text-[#FCD34D] opacity-70" />
-      <span>{text}</span>
+      <span>{renderText()}</span>
     </li>
   );
 }
@@ -106,8 +122,8 @@ export default function AboutSection() {
           <div className="absolute top-2 bottom-2 left-0 w-px" style={{ background: 'linear-gradient(to bottom, #FCD34D, rgba(252,211,77,0.1))' }} />
           
           <ul className="space-y-2">
-            {bullets.map((text, i) => (
-              <RevealBullet key={i} text={text} index={i} />
+            {bullets.map((b, i) => (
+              <RevealBullet key={i} text={b.text} highlight={b.highlight} index={i} />
             ))}
           </ul>
         </div>
