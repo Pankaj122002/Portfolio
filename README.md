@@ -1,6 +1,6 @@
 # Pankaj Pal - Full Stack Developer Portfolio
 
-**[🔴 Live Demo: pankaj122002.github.io/Portfolio](https://pankaj122002.github.io/Portfolio/)**
+**[🔴 Live Demo: https://pankaj122002.github.io/Portfolio/ ]**
 
 A highly interactive, modern, and visually stunning 3D developer portfolio built with React, Three.js, and GSAP. Designed to showcase projects, skills, and professional experience with a futuristic, "Apple-like" premium aesthetic.
 
