@@ -109,7 +109,7 @@ export default function Navigation() {
               className="w-5 h-0.5 bg-[#F5F5F7] block transition-transform duration-300"
               style={{
                 transform: mobileOpen
-                  ? i === 0 ? 'rotate(45deg) translate(3px,3px)' : i === 1 ? 'scaleX(0)' : 'rotate(-45deg) translate(3px,-3px)'
+                  ? i === 0 ? 'translateY(8px) rotate(45deg)' : i === 1 ? 'scaleX(0)' : 'translateY(-8px) rotate(-45deg)'
                   : 'none',
               }}
             />
