@@ -24,6 +24,12 @@ export default function Footer() {
             { icon: Mail, href: 'mailto:pankajpal01022002@gmail.com', label: 'Email' },
           ].map(({ icon: Icon, href, label }) => (
             <a key={label} href={href}
+              onClick={(e) => {
+                if (href.startsWith('mailto:') && !window.matchMedia('(max-width: 768px)').matches) {
+                  e.preventDefault();
+                  window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${href.replace('mailto:', '')}`, '_blank');
+                }
+              }}
               {...(!href.startsWith('mailto:') && { target: '_blank', rel: 'noopener noreferrer' })}
               aria-label={label}
               className="p-2 rounded-full text-muted hover:text-apple transition-colors"

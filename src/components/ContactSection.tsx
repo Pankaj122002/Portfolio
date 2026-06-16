@@ -21,7 +21,11 @@ export default function ContactSection() {
     e.preventDefault();
     if (!form.name || !form.message) return alert("Please fill in at least your name and message.");
     const body = encodeURIComponent(`Hi Pankaj,\n\nI'm reaching out from your portfolio site:\n\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\nBudget: ${form.budget}\n\nMessage:\n${form.message}`);
-    window.open(`mailto:pankajpal01022002@gmail.com?subject=Portfolio Inquiry from ${form.name}&body=${body}`, '_blank');
+    if (!window.matchMedia('(max-width: 768px)').matches) {
+      window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=pankajpal01022002@gmail.com&su=Portfolio+Inquiry+from+${encodeURIComponent(form.name)}&body=${body}`, '_blank');
+    } else {
+      window.open(`mailto:pankajpal01022002@gmail.com?subject=Portfolio Inquiry from ${form.name}&body=${body}`, '_blank');
+    }
   };
 
   return (
@@ -123,6 +127,12 @@ export default function ContactSection() {
                   { icon: Phone, href: 'https://wa.me/918954040631', label: 'WhatsApp', value: '+91-8954040631', color: '#22C55E' },
                 ].map(({ icon: Icon, href, label, value, color }) => (
                   <a key={label} href={href}
+                    onClick={(e) => {
+                      if (href.startsWith('mailto:') && !window.matchMedia('(max-width: 768px)').matches) {
+                        e.preventDefault();
+                        window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${href.replace('mailto:', '')}`, '_blank');
+                      }
+                    }}
                     {...(!href.startsWith('mailto:') && { target: '_blank', rel: 'noopener noreferrer' })}
                     className="flex items-center gap-3 p-2 rounded-xl transition-colors hover:bg-white/5"
                   >

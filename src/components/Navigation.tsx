@@ -89,6 +89,12 @@ export default function Navigation() {
         {/* CTA */}
         <a
           href="mailto:pankajpal01022002@gmail.com"
+          onClick={(e) => {
+            if (!window.matchMedia('(max-width: 768px)').matches) {
+              e.preventDefault();
+              window.open('https://mail.google.com/mail/?view=cm&fs=1&to=pankajpal01022002@gmail.com', '_blank');
+            }
+          }}
           className="hidden md:flex items-center px-5 py-2 rounded-full text-sm font-display font-medium text-white transition-all duration-200"
           style={{ background: '#4F46E5' }}
           onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = '#4338CA'; }}
@@ -121,7 +127,7 @@ export default function Navigation() {
       <div
         className="md:hidden overflow-hidden transition-all duration-300"
         style={{
-          maxHeight: mobileOpen ? '300px' : 0,
+          maxHeight: mobileOpen ? '450px' : 0,
           background: 'rgba(0,0,0,0.85)',
           backdropFilter: 'blur(20px)',
         }}
@@ -140,6 +146,12 @@ export default function Navigation() {
           ))}
           <a
             href="mailto:pankajpal01022002@gmail.com"
+            onClick={(e) => {
+              if (!window.matchMedia('(max-width: 768px)').matches) {
+                e.preventDefault();
+                window.open('https://mail.google.com/mail/?view=cm&fs=1&to=pankajpal01022002@gmail.com', '_blank');
+              }
+            }}
             className="block w-full text-center py-3 rounded-full text-white text-sm font-display font-medium"
             style={{ background: '#4F46E5' }}
           >
