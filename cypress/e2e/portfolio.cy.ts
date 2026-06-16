@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 describe('Portfolio E2E Tests', () => {
   it('should load the portfolio and display all sections correctly', () => {
     // 1. Visit page and wait for intro to finish
@@ -56,7 +58,7 @@ describe('Portfolio E2E Tests', () => {
   it('should intercept email links and buttons on desktop and open Gmail in a new tab', () => {
     cy.viewport('macbook-15');
     cy.visit('/Portfolio/', {
-      onBeforeLoad(win) {
+      onBeforeLoad(win: Cypress.AUTWindow) {
         cy.stub(win, 'open').as('windowOpen');
       }
     });
