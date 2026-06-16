@@ -1,0 +1,138 @@
+import { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
+
+interface PhotoMetadata {
+  id: string;
+  url: string;
+  lqip: string;
+}
+
+export default function IntroExperience({ onComplete }: { onComplete: () => void }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [photos, setPhotos] = useState<PhotoMetadata[]>([]);
+  const imagesRef = useRef<HTMLImageElement[]>([]);
+  
+  const onCompleteRef = useRef(onComplete);
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
+
+  // 1. Fetch metadata
+  useEffect(() => {
+    fetch('/optimized-photos/metadata.json')
+      .then(res => res.json())
+      .then(data => setPhotos(data))
+      .catch(console.error);
+  }, []);
+
+  // 2. Preload images & start automatic playback
+  useEffect(() => {
+    if (photos.length === 0 || !canvasRef.current) return;
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    canvas.width = 1920;
+    canvas.height = 1080;
+
+    let tl: gsap.core.Timeline | null = null;
+
+    const images: HTMLImageElement[] = [];
+    
+    // Load first frame immediately
+    const firstImg = new Image();
+    firstImg.src = photos[0].url;
+    firstImg.onload = () => {
+      ctx.drawImage(firstImg, 0, 0, canvas.width, canvas.height);
+      images[0] = firstImg;
+      
+      // Load the rest of the sequence
+      let loadedCount = 1;
+      for (let i = 1; i < photos.length; i++) {
+        const img = new Image();
+        img.src = photos[i].url;
+        img.onload = () => {
+          loadedCount++;
+          // Start animation once all or a sufficient chunk is loaded
+          if (loadedCount === photos.length) {
+            startAnimation();
+          }
+        };
+        images[i] = img;
+      }
+    };
+    imagesRef.current = images;
+
+    const startAnimation = () => {
+      const totalFrames = photos.length - 1;
+
+      // Using GSAP to tween a dummy object for smooth 60fps playback over exactly ~4 seconds
+      const obj = { frame: 0 };
+      const duration = 4.0; // 4 seconds total for 240 frames
+
+      tl = gsap.timeline();
+
+      tl.to(obj, {
+        frame: totalFrames,
+        duration: duration,
+        ease: 'none',
+        onUpdate: () => {
+          const frameIndex = Math.round(obj.frame);
+          const img = imagesRef.current[frameIndex];
+          if (img && img.complete) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const hRatio = canvas.width / img.width;
+            const vRatio = canvas.height / img.height;
+            const ratio = Math.max(hRatio, vRatio);
+            const centerShift_x = (canvas.width - img.width * ratio) / 2;
+            const centerShift_y = (canvas.height - img.height * ratio) / 2;  
+            
+            ctx.drawImage(img, 0, 0, img.width, img.height,
+                          centerShift_x, centerShift_y, img.width * ratio, img.height * ratio);  
+          }
+        },
+        onComplete: () => {
+          // Fade out intro typography and trigger next phase
+          gsap.to('#intro-typography', { 
+            opacity: 0, 
+            duration: 0.5, 
+            onComplete: () => {
+              if (onCompleteRef.current) onCompleteRef.current();
+            }
+          });
+        }
+      });
+
+      // Typography fade-in during the last 25% of the video
+      tl.fromTo('#intro-typography', 
+        { opacity: 0, scale: 0.9, y: 30 },
+        { opacity: 1, scale: 1, y: 0, duration: 1.0, ease: 'power2.out' },
+        `-=${1.5}` // Start 1.5 seconds before the video ends
+      );
+    };
+
+    return () => {
+      if (tl) tl.kill();
+    };
+  }, [photos]);
+
+  return (
+    <div className="fixed inset-0 z-[100] pointer-events-none bg-black flex items-center justify-center">
+      <canvas 
+        ref={canvasRef} 
+        className="w-full h-full object-cover opacity-50" 
+      />
+      
+      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center text-white pointer-events-none opacity-0" id="intro-typography">
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-4" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8)' }}>
+          Pankaj Pal
+        </h1>
+        <p className="text-xl md:text-2xl text-gray-300 tracking-wide" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.8)' }}>
+          Full Stack Software Developer
+        </p>
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { cursor: none; }
+
+  html { scroll-behavior: auto; }
+
+  body {
+    @apply bg-background text-primary font-body antialiased;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 { @apply font-display; }
+
+  ::-webkit-scrollbar { width: 0; }
+
+  ::selection {
+    background: rgba(79, 70, 229, 0.25);
+    color: #F5F5F7;
+  }
+}
+
+@layer components {
+  /* Apple glass */
+  .glass {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-dark {
+    background: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #4F46E5 0%, #06B6D4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Apple-style section titles */
+  .section-title {
+    font-size: clamp(32px, 7vw, 88px);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    @apply font-display font-bold text-primary;
+  }
+
+  /* Pill button — filled */
+  .btn-pill {
+    @apply inline-flex items-center gap-2 px-8 py-4 rounded-full font-display font-semibold text-white bg-indigo;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .btn-pill:hover {
+    background: #4338CA;
+    transform: scale(1.04);
+    box-shadow: 0 0 48px rgba(79, 70, 229, 0.35);
+  }
+
+  /* Pill button — ghost */
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 px-8 py-4 rounded-full font-display font-semibold text-primary;
+    border: 1.5px solid rgba(245, 245, 247, 0.2);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .btn-ghost:hover {
+    border-color: rgba(245, 245, 247, 0.5);
+    background: rgba(245, 245, 247, 0.06);
+  }
+
+  /* Tilt card */
+  .tilt-card {
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease-out;
+    will-change: transform;
+  }
+
+  /* Glow hover */
+  .glow-hover {
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .glow-hover:hover {
+    box-shadow: 0 0 40px rgba(79, 70, 229, 0.3);
+    transform: translateY(-4px);
+  }
+
+  /* Shimmer skeleton */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(255,255,255,0.03) 25%,
+      rgba(255,255,255,0.08) 50%,
+      rgba(255,255,255,0.03) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+  }
+
+  /* Input glow */
+  .input-apple {
+    @apply w-full px-5 py-4 bg-white/5 rounded-xl text-primary placeholder-muted/40 text-sm;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+  .input-apple:focus {
+    border-color: #4F46E5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+  }
+
+  /* Progress ring */
+  .progress-ring { transform: rotate(-90deg); }
+  .progress-ring circle { transition: stroke-dashoffset 1s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+
+  /* Scroll bounce */
+  @keyframes bounce-slow {
+    0%, 100% { transform: translateY(0) translateX(-50%); }
+    50% { transform: translateY(10px) translateX(-50%); }
+  }
+
+  /* Horizontal timeline scroll */
+  .timeline-track {
+    display: flex;
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Tech chip */
+  .tech-chip {
+    @apply px-3 py-1 text-xs rounded-full text-muted;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+}
+
+@layer utilities {
+  .text-apple { color: #F5F5F7; }
+  .text-apple-muted { color: #86868B; }
+  .text-apple-subtle { color: #424245; }
+  .perspective-1200 { perspective: 1200px; }
+  .transform-3d { transform-style: preserve-3d; }
+}

@@ -1,0 +1,145 @@
+import { useEffect, useRef, useState } from 'react';
+
+const lines = [
+  { text: "I'm a Full Stack Developer based in Delhi NCR.", highlight: 'Full Stack Developer' },
+  { text: 'At Rossarah Services, I monitor 8+ IoT energy meters — live.', highlight: 'IoT energy meters' },
+  { text: '30+ API endpoints. Sub-200ms. 40% faster queries.', highlight: '40% faster' },
+  { text: 'Before that — ML models. 85% accuracy. Streamlit dashboards.', highlight: '85% accuracy' },
+  { text: 'I build with Angular, .NET, Docker, and AI tools every day.', highlight: 'Angular, .NET, Docker' },
+];
+
+const stats = [
+  { value: 8, suffix: '+', label: 'IoT Devices' },
+  { value: 30, suffix: '+', label: 'API Endpoints' },
+  { value: 40, suffix: '%', label: 'Faster Queries' },
+  { value: 20, suffix: '+', label: 'Technologies' },
+];
+
+function AnimatedCount({ target, suffix }: { target: number; suffix: string }) {
+  const [count, setCount] = useState(0);
+  const [started, setStarted] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setStarted(true); }, { threshold: 0.5 });
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!started) return;
+    const dur = 1800;
+    const start = Date.now();
+    const run = () => {
+      const p = Math.min((Date.now() - start) / dur, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      setCount(Math.floor(ease * target));
+      if (p < 1) requestAnimationFrame(run);
+    };
+    run();
+  }, [started, target]);
+
+  return <div ref={ref} className="tabular-nums">{count}{suffix}</div>;
+}
+
+function RevealLine({ text, highlight, index }: { text: string; highlight: string | null; index: number }) {
+  const [visible, setVisible] = useState(false);
+  const ref = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, {
+      threshold: 0.3,
+      rootMargin: '-80px 0px',
+    });
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, []);
+
+  const renderText = () => {
+    if (!highlight) return text;
+    const idx = text.indexOf(highlight);
+    if (idx === -1) return text;
+    return (
+      <>
+        {text.slice(0, idx)}
+        <span 
+          className="font-semibold" 
+          style={{ color: '#60A5FA', margin: '0 2px' }}
+        >
+          {highlight}
+        </span>
+        {text.slice(idx + highlight.length)}
+      </>
+    );
+  };
+
+  return (
+    <p
+      ref={ref}
+      className="font-body font-light tracking-wide leading-relaxed mb-8"
+      style={{
+        fontSize: 'clamp(18px, 2.5vw, 28px)',
+        color: 'rgba(255, 255, 255, 0.9)',
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translateY(0)' : 'translateY(32px)',
+        transition: `opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 0.1}s, transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 0.1}s`,
+      }}
+    >
+      {renderText()}
+    </p>
+  );
+}
+
+export default function AboutSection() {
+  return (
+    <section id="about" className="relative py-16 px-4 md:px-8" style={{ zIndex: 10 }}>
+      {/* Subtle top separator */}
+      <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)' }} />
+
+      <div className="max-w-6xl mx-auto">
+        {/* Section label */}
+        <div className="mb-8">
+          <span
+            className="text-xs tracking-[0.25em] uppercase text-muted font-body"
+            style={{ letterSpacing: '0.25em' }}
+          >
+            About
+          </span>
+          <h2
+            className="mt-3"
+            style={{ fontSize: 'clamp(36px, 5vw, 68px)', lineHeight: 1.0 }}
+          >
+            <span className="font-display font-bold text-white opacity-90">The Developer</span>
+            <br />
+            <span className="font-display font-bold gradient-text tracking-tight">Behind the Code</span>
+          </h2>
+        </div>
+
+        {/* Story lines — each reveals on scroll */}
+        <div className="space-y-2 mb-10">
+          {lines.map((line, i) => (
+            <RevealLine key={i} {...line} index={i} />
+          ))}
+        </div>
+
+        {/* Stats row */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {stats.map((stat) => (
+            <div
+              key={stat.label}
+              className="glass rounded-2xl p-6 text-center"
+            >
+              <div
+                className="font-display font-bold gradient-text mb-1"
+                style={{ fontSize: 'clamp(28px, 4vw, 42px)', lineHeight: 1.0 }}
+              >
+                <AnimatedCount target={stat.value} suffix={stat.suffix} />
+              </div>
+              <p className="text-muted text-xs tracking-wide uppercase">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
