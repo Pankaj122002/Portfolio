@@ -40,4 +40,42 @@ describe('Portfolio E2E Tests', () => {
     cy.get('#contact button').contains('WhatsApp').should('be.visible');
     cy.get('#contact button').contains('Email').should('be.visible');
   });
+
+  it('should display the Hire Me button in the mobile menu', () => {
+    cy.viewport('iphone-x');
+    cy.visit('/Portfolio/');
+    cy.get('#hero', { timeout: 15000 }).should('be.visible');
+    
+    // Open mobile menu
+    cy.get('button[aria-label="Menu"]').should('be.visible').click();
+    
+    // Verify Hire Me button is visible (menu height is sufficient)
+    cy.get('nav .md\\:hidden a').contains('Hire Me').should('be.visible');
+  });
+
+  it('should intercept email links and buttons on desktop and open Gmail in a new tab', () => {
+    cy.viewport('macbook-15');
+    cy.visit('/Portfolio/', {
+      onBeforeLoad(win) {
+        cy.stub(win, 'open').as('windowOpen');
+      }
+    });
+    cy.get('#hero', { timeout: 15000 }).should('be.visible');
+    
+    // Fill contact form
+    cy.get('#contact').scrollIntoView();
+    cy.get('#contact input[name="name"]').type('Test User');
+    cy.get('#contact input[name="email"]').type('test@example.com');
+    cy.get('#contact textarea[name="message"]').type('Hello, this is a test message!');
+    
+    // Click Email button
+    cy.get('#contact button').contains('Email').click();
+    
+    // Check if window.open was called with mail.google.com
+    cy.get('@windowOpen').should('have.been.calledWithMatch', /mail\.google\.com/, '_blank');
+    
+    // Check direct contact email link
+    cy.get('a[href="mailto:pankajpal01022002@gmail.com"]').first().click({ force: true });
+    cy.get('@windowOpen').should('have.been.calledWithMatch', /mail\.google\.com/, '_blank');
+  });
 });
