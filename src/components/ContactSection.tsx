@@ -6,8 +6,6 @@ const budgets = ['Select budget range', 'Under ₹10,000', '₹10,000 – ₹50,
 export default function ContactSection() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', budget: budgets[0], message: '' });
   const [focus, setFocus] = useState('');
-  const [sending, setSending] = useState(false);
-  const [sent, setSent] = useState(false);
 
   const change = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
     setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
@@ -53,15 +51,7 @@ export default function ContactSection() {
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Form */}
           <div className="glass rounded-2xl p-3 h-full flex flex-col">
-            {sent ? (
-              <div className="flex flex-col items-center justify-center py-12 gap-4">
-                <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #4F46E5, #06B6D4)' }}>
-                  <Send className="w-7 h-7 text-white" />
-                </div>
-                <h3 className="font-display font-semibold text-apple text-xl">Sent!</h3>
-                <p className="text-muted text-sm text-center">I&apos;ll reply within 24 hours.</p>
-              </div>
-            ) : (
+
               <form className="space-y-2 flex flex-col flex-1">
                 {[
                   { id: 'name', label: 'Name', type: 'text', placeholder: 'Your name' },
@@ -119,7 +109,6 @@ export default function ContactSection() {
                   </button>
                 </div>
               </form>
-            )}
           </div>
 
           {/* Contact info */}
