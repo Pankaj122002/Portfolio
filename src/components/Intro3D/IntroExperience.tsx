@@ -9,6 +9,7 @@ interface PhotoMetadata {
 
 export default function IntroExperience({ onComplete }: { onComplete: () => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
   const [photos, setPhotos] = useState<PhotoMetadata[]>([]);
   const imagesRef = useRef<HTMLImageElement[]>([]);
   
@@ -68,6 +69,11 @@ export default function IntroExperience({ onComplete }: { onComplete: () => void
 
     const startAnimation = () => {
       const totalFrames = photos.length - 1;
+
+      if (audioRef.current) {
+        audioRef.current.volume = 0.5; // adjust volume if needed
+        audioRef.current.play().catch(e => console.warn("Audio autoplay blocked by browser:", e));
+      }
 
       // Using GSAP to tween a dummy object for smooth 60fps playback over exactly ~4 seconds
       const obj = { frame: 0 };
@@ -135,6 +141,7 @@ export default function IntroExperience({ onComplete }: { onComplete: () => void
           Full Stack Software Developer
         </p>
       </div>
+      <audio ref={audioRef} src={`${import.meta.env.BASE_URL}intro-music.mp3`} preload="auto" />
     </div>
   );
 }
