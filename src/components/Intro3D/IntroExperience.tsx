@@ -13,6 +13,10 @@ export default function IntroExperience({ onComplete }: { onComplete: () => void
   const [photos, setPhotos] = useState<PhotoMetadata[]>([]);
   const imagesRef = useRef<HTMLImageElement[]>([]);
   
+  const [isReady, setIsReady] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
+  const startAnimationRef = useRef<(() => void) | null>(null);
+  
   const onCompleteRef = useRef(onComplete);
   useEffect(() => {
     onCompleteRef.current = onComplete;
@@ -57,9 +61,9 @@ export default function IntroExperience({ onComplete }: { onComplete: () => void
         img.src = `${import.meta.env.BASE_URL}${stripSlash(photos[i].url)}`;
         img.onload = () => {
           loadedCount++;
-          // Start animation once all or a sufficient chunk is loaded
+          // Enable start button once all or a sufficient chunk is loaded
           if (loadedCount === photos.length) {
-            startAnimation();
+            setIsReady(true);
           }
         };
         images[i] = img;
@@ -121,18 +125,37 @@ export default function IntroExperience({ onComplete }: { onComplete: () => void
       );
     };
 
+    startAnimationRef.current = startAnimation;
+
     return () => {
       if (tl) tl.kill();
     };
   }, [photos]);
 
+  const handleStart = () => {
+    setHasStarted(true);
+    if (startAnimationRef.current) startAnimationRef.current();
+  };
+
   return (
-    <div className="fixed inset-0 z-[100] pointer-events-none bg-black flex items-center justify-center">
+    <div className={`fixed inset-0 z-[100] bg-black flex items-center justify-center ${hasStarted ? 'pointer-events-none' : 'pointer-events-auto'}`}>
       <canvas 
         ref={canvasRef} 
-        className="w-full h-full object-cover opacity-70" 
+        className={`w-full h-full object-cover transition-opacity duration-1000 ${hasStarted ? 'opacity-70' : 'opacity-30'}`} 
       />
       
+      {!hasStarted && (
+        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center">
+          <button 
+            onClick={handleStart}
+            disabled={!isReady}
+            className={`px-8 py-4 rounded-full text-white text-xl font-medium tracking-wider border-2 border-white/20 transition-all duration-300 ${isReady ? 'hover:bg-white hover:text-black hover:scale-105 cursor-pointer opacity-100' : 'opacity-50 cursor-not-allowed'}`}
+          >
+            {isReady ? 'Start Experience' : 'Loading...'}
+          </button>
+        </div>
+      )}
+
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center text-white pointer-events-none opacity-0" id="intro-typography">
         <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-4" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8)' }}>
           Pankaj Pal

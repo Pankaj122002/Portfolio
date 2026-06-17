@@ -2,9 +2,13 @@
 
 describe('Portfolio E2E Tests', () => {
   it('should load the portfolio and display all sections correctly', () => {
-    // 1. Visit page and wait for intro to finish
+    // 1. Visit page and handle intro
     cy.visit('/Portfolio/');
-    cy.get('#hero', { timeout: 15000 }).should('be.visible');
+    
+    // Click the "Start Experience" button when it becomes available
+    cy.contains('button', 'Start Experience', { timeout: 15000 }).should('be.visible').click();
+    
+    cy.get('#hero', { timeout: 20000 }).should('be.visible');
     
     // 2. Check Hero Section
     // Since the text 'Pankaj Pal' is split into span elements for animation, we check for the first few letters or the main role text
@@ -46,7 +50,8 @@ describe('Portfolio E2E Tests', () => {
   it('should display the Hire Me button in the mobile menu', () => {
     cy.viewport('iphone-x');
     cy.visit('/Portfolio/');
-    cy.get('#hero', { timeout: 15000 }).should('be.visible');
+    cy.contains('button', 'Start Experience', { timeout: 15000 }).should('be.visible').click();
+    cy.get('#hero', { timeout: 20000 }).should('be.visible');
     
     // Open mobile menu
     cy.get('button[aria-label="Menu"]').should('be.visible').click();
@@ -62,7 +67,9 @@ describe('Portfolio E2E Tests', () => {
         cy.stub(win, 'open').as('windowOpen');
       }
     });
-    cy.get('#hero', { timeout: 15000 }).should('be.visible');
+    
+    cy.contains('button', 'Start Experience', { timeout: 15000 }).should('be.visible').click();
+    cy.get('#hero', { timeout: 20000 }).should('be.visible');
     
     // Fill contact form
     cy.get('#contact').scrollIntoView();
