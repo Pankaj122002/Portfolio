@@ -255,7 +255,7 @@ export default function ThreeBackground({ scrollProgress }: ThreeBackgroundProps
         }
         posAttr.needsUpdate = true;
 
-        const particleOpacity = Math.max(heroW, aboutW * 0.4);
+        const particleOpacity = Math.max(heroW, aboutW * 0.4) * 0.5;
         particleMat.opacity = particleOpacity;
 
         // Hero: slow galaxy rotation + mouse parallax
@@ -264,14 +264,14 @@ export default function ThreeBackground({ scrollProgress }: ThreeBackgroundProps
         particles.rotation.z = t * 0.015;
 
         // ── Wireframe icosahedron (about) ─────────────────────────────
-        icoMeshMat.opacity = aboutW * 0.35;
+        icoMeshMat.opacity = aboutW * 0.2;
         icoMesh.rotation.y = t * 0.25;
         icoMesh.rotation.x = t * 0.1;
 
         // ── Shards (skills) ───────────────────────────────────────────
         shards.forEach((shard) => {
           const mat = shard.material as THREE.MeshBasicMaterial;
-          mat.opacity = skillsW * 0.6;
+          mat.opacity = skillsW * 0.3;
           const { speed, phaseY } = shard.userData as { speed: number; phaseY: number };
           shard.rotation.x += 0.008 * speed;
           shard.rotation.y += 0.012 * speed;
@@ -285,11 +285,11 @@ export default function ThreeBackground({ scrollProgress }: ThreeBackgroundProps
         tunnelGroup.position.z = tunnelZ * 0.5;
         tunnelPlanes.forEach((plane) => {
           const mat = plane.material as THREE.MeshBasicMaterial;
-          mat.opacity = projectsW * 0.15;
+          mat.opacity = projectsW * 0.08;
         });
         tunnelBorders.forEach((border) => {
           const mat = border.material as THREE.LineBasicMaterial;
-          mat.opacity = projectsW * 0.5;
+          mat.opacity = projectsW * 0.25;
         });
 
         // ── Grid dots (services/stats) ────────────────────────────────
@@ -297,15 +297,15 @@ export default function ThreeBackground({ scrollProgress }: ThreeBackgroundProps
           const mat = dot.material as THREE.MeshBasicMaterial;
           const { phase } = dot.userData as { phase: number };
           const pulse = 0.3 + 0.2 * Math.sin(t * 1.5 + phase);
-          mat.opacity = gridW * pulse;
+          mat.opacity = gridW * pulse * 0.5;
         });
         gridGroup.rotation.x = -0.3;
         gridGroup.position.z = -2;
 
         // ── Contact ring ───────────────────────────────────────────────
         const ringPulse = 0.7 + 0.3 * Math.sin(t * 1.2);
-        ringMat.opacity = contactW * ringPulse;
-        outerRingMat.opacity = contactW * ringPulse * 0.4;
+        ringMat.opacity = contactW * ringPulse * 0.4;
+        outerRingMat.opacity = contactW * ringPulse * 0.2;
         ring.rotation.z = t * 0.15;
         outerRing.rotation.z = -t * 0.08;
 
