@@ -28,7 +28,7 @@ export default function HeroScrollCanvas({ scrollHeight, opacity = 1 }: HeroScro
       }
     });
 
-    return () => tl.kill();
+    return () => { tl.kill(); };
   }, []);
 
   return (
