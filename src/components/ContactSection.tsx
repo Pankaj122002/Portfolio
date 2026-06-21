@@ -29,7 +29,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="relative py-4 md:py-8 px-4 md:px-8 section-bg" style={{ zIndex: 10 }}>
+    <section id="contact" className="relative pt-16 pb-8 md:py-12 px-4 md:px-8 section-bg" style={{ zIndex: 10 }}>
       <div className="section-divider absolute top-0 left-0 right-0" />
 
       {/* Animated rings */}

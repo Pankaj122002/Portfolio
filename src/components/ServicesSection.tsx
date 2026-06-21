@@ -24,7 +24,7 @@ function ServiceCard({ icon: Icon, title, desc, color, index }: typeof services[
   return (
     <div
       ref={ref}
-      className="glass-premium rounded-2xl p-5 group transition-all duration-400 gsap-stagger-child"
+      className="glass-premium rounded-2xl p-4 md:p-5 group transition-all duration-400 gsap-stagger-child"
       style={{
         opacity: visible ? 1 : 0,
         translate: visible ? 'none' : '0 30px',
@@ -40,7 +40,7 @@ function ServiceCard({ icon: Icon, title, desc, color, index }: typeof services[
       }}
     >
       <div
-        className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
+        className="w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center mb-3 transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
         style={{ background: `${color}12`, boxShadow: `0 0 0 0 ${color}00` }}
         onMouseEnter={(e) => {
           (e.currentTarget as HTMLDivElement).style.boxShadow = `0 0 25px ${color}30`;
@@ -49,25 +49,25 @@ function ServiceCard({ icon: Icon, title, desc, color, index }: typeof services[
           (e.currentTarget as HTMLDivElement).style.boxShadow = '';
         }}
       >
-        <Icon className="w-6 h-6" style={{ color }} />
+        <Icon className="w-5 h-5 md:w-6 md:h-6" style={{ color }} />
       </div>
-      <h3 className="font-display font-semibold text-apple mb-2 text-base">{title}</h3>
-      <p className="text-muted text-sm leading-relaxed">{desc}</p>
+      <h3 className="font-display font-semibold text-apple mb-1 text-[15px] md:text-base leading-snug">{title}</h3>
+      <p className="text-muted text-[13px] md:text-sm leading-relaxed">{desc}</p>
     </div>
   );
 }
 
 export default function ServicesSection() {
   return (
-    <section id="services" className="relative py-8 md:py-12 px-4 md:px-8 section-bg" style={{ zIndex: 10 }}>
+    <section id="services" className="relative py-4 md:py-8 px-4 md:px-8 section-bg" style={{ zIndex: 10 }}>
       <div className="section-divider absolute top-0 left-0 right-0 gsap-line" style={{ transformOrigin: 'left' }} />
 
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-6 md:mb-8 gsap-text-up">
-          <span className="text-xs tracking-[0.25em] uppercase text-muted font-body">Offering</span>
+        <div className="text-center mb-4 gsap-text-up">
+          <span className="text-[10px] md:text-xs tracking-[0.25em] uppercase text-muted font-body">Offering</span>
           <h2
-            className="font-display font-bold text-apple mt-1 md:mt-2"
-            style={{ fontSize: 'clamp(32px, 5vw, 60px)', lineHeight: 1.0, letterSpacing: '-0.03em' }}
+            className="font-display font-bold text-apple mt-1"
+            style={{ fontSize: 'clamp(28px, 5vw, 48px)', lineHeight: 1.0, letterSpacing: '-0.03em' }}
           >
             What I
             <br />
@@ -75,13 +75,13 @@ export default function ServicesSection() {
           </h2>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5 gsap-stagger-parent">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-4 gsap-stagger-parent">
           {services.map((s, i) => (
             <ServiceCard key={s.title} {...s} index={i} />
           ))}
         </div>
 
-        <div className="text-center mt-6 md:mt-8 gsap-reveal">
+        <div className="text-center mt-4 gsap-reveal">
           <a href="#contact" className="btn-ghost" onClick={(e) => {
             e.preventDefault();
             document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });

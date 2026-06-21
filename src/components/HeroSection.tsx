@@ -89,18 +89,18 @@ export default function HeroSection() {
 
     const isDesktop = window.innerWidth > 768;
 
-    // Animate content splitting to the corners
+    // Animate content moving to the right side together
     tl.to("#hero-left-group", {
-      x: isDesktop ? "-28vw" : "-15vw",
-      y: isDesktop ? "-5vh" : "-5vh",
-      scale: isDesktop ? 0.95 : 0.8,
+      x: isDesktop ? "35vw" : "0vw",
+      y: isDesktop ? "4vh" : "0vh",
+      scale: isDesktop ? 0.65 : 1,
       ease: "power2.inOut",
       duration: 1
     }, 0)
     .to("#hero-right-group", {
-      x: isDesktop ? "35vw" : "20vw",
-      y: isDesktop ? "5vh" : "10vh",
-      scale: isDesktop ? 0.95 : 0.8,
+      x: isDesktop ? "35vw" : "0vw",
+      y: isDesktop ? "-2vh" : "0vh",
+      scale: isDesktop ? 0.95 : 1,
       ease: "power2.inOut",
       duration: 1
     }, 0)
