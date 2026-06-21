@@ -1,12 +1,13 @@
 import { useRef, useState, useEffect } from 'react';
 
 const skillGroups = [
-  { group: 'Frontend', color: '#6366F1', skills: ['React.js', 'Angular', 'TypeScript', 'Vite', 'HTML/CSS', 'Tailwind', 'Three.js', 'ECharts'] },
-  { group: 'Backend', color: '#06B6D4', skills: ['.NET Core', 'ASP.NET MVC', 'Web API', 'C#', 'Entity Framework', 'ADO.NET'] },
-  { group: 'Database', color: '#8B5CF6', skills: ['SQL Server', 'Stored Procedures', 'CTEs', 'Window Functions', 'SSMS'] },
-  { group: 'DevOps', color: '#10B981', skills: ['Docker', 'CI/CD', 'GitHub Actions', 'IIS 10', 'Render', 'Vercel'] },
-  { group: 'Data & ML', color: '#F59E0B', skills: ['Python', 'scikit-learn', 'Pandas', 'NumPy', 'Streamlit'] },
-  { group: 'AI Tools', color: '#EC4899', skills: ['ChatGPT', 'GitHub Copilot', 'Claude AI', 'Prompt Engineering'] },
+  { group: 'LANGUAGES', color: '#6366F1', skills: ['C#', 'Python', 'SQL', 'JavaScript(AJAX, jQuery)', 'TypeScript'] },
+  { group: 'FRAMEWORKS', color: '#06B6D4', skills: ['.NET Framework', 'ASP.NET Web API', 'ASP.NET MVC', 'Web Forms', 'Angular 19/21', 'React.js (v18)', 'React Three Fiber', 'React Three Drei', 'Entity Framework', 'ADO.NET', 'Vite'] },
+  { group: 'DATABASE', color: '#8B5CF6', skills: ['SQL Server', 'SSMS', 'Stored Procedures', 'CTEs', 'Window Functions', 'Supabase'] },
+  { group: 'FRONTEND', color: '#F59E0B', skills: ['HTML', 'CSS', 'HTML5 Canvas API', 'Tailwind CSS', 'ECharts', 'Streamlit', 'Bootstrap', 'Angular Material', 'Chart.js', 'Three.js', 'GSAP (ScrollTrigger)', 'Framer Motion', 'Lenis'] },
+  { group: 'PYTHON & MACHINE LEARNING', color: '#10B981', skills: ['scikit-learn', 'NumPy', 'Pandas', 'Matplotlib', 'Seaborn', 'BeautifulSoup', 'TextBlob'] },
+  { group: 'DEPLOYMENT & DEVOPS', color: '#3B82F6', skills: ['IIS 10.0', 'FTP/FTPS Web Publish', 'Docker', 'Render', 'Vercel', 'Netlify', 'GitHub Pages', 'Firebase Hosting', 'GitHub Actions', 'CI/CD Pipelines'] },
+  { group: 'TOOLS & PRACTICES', color: '#EC4899', skills: ['Visual Studio 2022', 'Git / GitHub', 'Google Colab', 'Cypress', 'Vitest', 'React Hook Form', 'Zod', 'EmailJS', 'sharp (Node.js)', 'GitHub Copilot', 'Claude AI', 'ChatGPT', 'OOP', 'REST API'] },
 ];
 
 interface TiltCardProps { group: string; color: string; skills: string[]; index: number; }

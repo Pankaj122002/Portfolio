@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import { ExternalLink, Github } from 'lucide-react';
 
 const projects = [
+  { id: 0, emoji: '🏥', title: 'MedicarePro Clinic Website', desc: 'Built a cinematic clinic website with a canvas-based intro sequence rendered from 300 UHD WebP frames, GSAP scroll scrub, 3D starfield, and appointment booking.', url: 'https://medicare-c428d.web.app/', chips: ['React.js', 'Three.js', 'GSAP', 'Firebase'], accent: '#EC4899' },
   { id: 1, emoji: '🍕', title: 'Cheesy Bite Pizza', desc: 'Modern pizza ordering site with WhatsApp checkout, responsive design, and smooth animations.', url: 'https://cheesybitepizza.netlify.app/', chips: ['Angular', 'Bootstrap', 'WhatsApp API', 'Netlify'], accent: '#EF4444' },
   { id: 2, emoji: '🍛', title: 'Biryani Ordering Website', desc: 'Reactive Angular SPA with RxJS BehaviorSubject cart, WhatsApp checkout, and Cypress E2E tests.', url: 'https://biryani-website-three.vercel.app/', chips: ['Angular 19', 'RxJS', 'Bootstrap 5', 'Cypress', 'Vercel'], accent: '#F59E0B' },
   { id: 3, emoji: '💸', title: 'Enterprise Expense Tracker', desc: 'Full-featured expense management dashboard with Chart.js visualization and Material Design.', url: 'https://expense-tracker-a8s.pages.dev/dashboard', chips: ['Angular 21', 'Material', 'Chart.js', 'Cypress'], accent: '#10B981' },
