@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const milestones = [
   { year: '2020', title: 'B.Tech CSE', company: 'RKGIT Ghaziabad', achievement: 'Built foundational knowledge in CS, algorithms & software engineering', chips: ['C/C++', 'Data Structures', 'DBMS', 'OS'], color: '#06B6D4' },

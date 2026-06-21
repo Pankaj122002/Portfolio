@@ -81,6 +81,7 @@ export function useHeroSequence(totalScrollHeight: number) {
         reject(e);
       };
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // LRU eviction: keep max ~60 frames

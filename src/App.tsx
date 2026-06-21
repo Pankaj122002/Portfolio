@@ -49,8 +49,6 @@ export default function App() {
       smoothWheel: true,
     });
 
-    let ctx: gsap.Context;
-
     // Connect Lenis to GSAP ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update);
     
@@ -58,7 +56,7 @@ export default function App() {
     gsap.ticker.add(updateLenis);
     gsap.ticker.lagSmoothing(0);
 
-    ctx = gsap.context(() => {
+    const ctx = gsap.context(() => {
       // Fade in main content smoothly
       gsap.fromTo('#main-content', 
         { opacity: 0, y: 50 }, 
