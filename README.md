@@ -38,9 +38,6 @@ Portfolio/
 │   ├── optimized-photos/    # High-quality optimized images for the cinematic intro sequence
 │   ├── intro-music.mp3      # Audio file played during the Intro sequence
 │   └── favicon.svg          # Website favicon
-├── scripts/                 # Node.js Utilities for Asset Processing
-│   ├── optimize-hero-frames.js # Script to resize and compress hero sequence images using sharp
-│   └── optimize-images.js      # Script to optimize the intro sequence images
 ├── src/                     # Main Application Source Code
 │   ├── components/          # Reusable UI Sections and Components
 │   │   ├── Intro3D/
