@@ -37,7 +37,13 @@ describe('Portfolio E2E Tests', () => {
     cy.get('#projects').contains('Featured').should('be.visible');
     cy.get('#projects .group').should('have.length.greaterThan', 0);
 
-    // 7. Check Contact Section
+    // 7. Check Services Section
+    cy.get('#services').scrollIntoView();
+    cy.get('#services').contains('What I').should('be.visible');
+    cy.get('#services').contains('Build').should('be.visible');
+    cy.get('#services').contains('Business & Restaurant Websites').should('be.visible');
+
+    // 8. Check Contact Section
     cy.get('#contact').scrollIntoView();
     cy.get('#contact').contains("Let's Build").should('be.visible');
     cy.get('#contact input[name="name"]').type('Test User');
