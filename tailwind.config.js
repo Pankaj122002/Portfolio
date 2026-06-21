@@ -6,13 +6,14 @@ export default {
       colors: {
         background: '#000000',
         surface: '#0a0a0a',
-        card: '#141414',
+        card: '#111111',
         primary: '#F5F5F7',
         muted: '#86868B',
         subtle: '#424245',
-        indigo: '#4F46E5',
+        indigo: '#6366F1',
         cyan: '#06B6D4',
-        purple: '#7C3AED',
+        purple: '#8B5CF6',
+        accent: '#A78BFA',
       },
       fontFamily: {
         display: ['"Space Grotesk"', '-apple-system', '"SF Pro Display"', 'sans-serif'],
@@ -31,6 +32,9 @@ export default {
         'marquee-reverse': 'marquee 50s linear infinite reverse',
         'breath': 'breath 4s ease-in-out infinite',
         'shimmer': 'shimmer 2s linear infinite',
+        'glow': 'glow-pulse 3s ease-in-out infinite',
+        'gradient': 'gradient-shift 6s ease infinite',
+        'spin-slow': 'rotate-slow 20s linear infinite',
       },
       keyframes: {
         float: {
@@ -54,6 +58,10 @@ export default {
           '0%': { backgroundPosition: '-200% 0' },
           '100%': { backgroundPosition: '200% 0' },
         },
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
     },
   },

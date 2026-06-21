@@ -77,6 +77,19 @@ export default function IntroExperience({ onComplete }: { onComplete: () => void
       if (audioRef.current) {
         audioRef.current.volume = 0.5; // adjust volume if needed
         audioRef.current.play().catch(e => console.warn("Audio autoplay blocked by browser:", e));
+        
+        // Fade out and pause audio 1 second before the end (starts at 2.5s, ends at 3.0s)
+        gsap.to(audioRef.current, {
+          volume: 0,
+          duration: 0.5,
+          delay: 2.5,
+          onComplete: () => {
+            if (audioRef.current) {
+              audioRef.current.pause();
+              audioRef.current.currentTime = 0;
+            }
+          }
+        });
       }
 
       // Using GSAP to tween a dummy object for smooth 60fps playback over exactly ~4 seconds

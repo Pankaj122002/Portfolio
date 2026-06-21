@@ -1,11 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import Lenis from 'lenis';
-import { useScrollProgress } from './hooks/useScrollProgress';
-import ThreeBackground from './components/ThreeBackground';
 import CustomCursor from './components/CustomCursor';
-import LoadingScreen from './components/LoadingScreen';
 import Navigation from './components/Navigation';
-import HeroSection from './components/HeroSection';
+import HeroSection, { HERO_SCROLL_HEIGHT } from './components/HeroSection';
+import HeroScrollCanvas from './components/HeroScrollCanvas';
+import FloatingBackground from './components/FloatingBackground';
 import AboutSection from './components/AboutSection';
 import SkillsSection from './components/SkillsSection';
 import ExperienceSection from './components/ExperienceSection';
@@ -17,7 +16,11 @@ import TestimonialsSection from './components/TestimonialsSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import IntroExperience from './components/Intro3D/IntroExperience';
+import { useScrollAnimations } from './hooks/useScrollAnimations';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 function DesktopOnly({ children }: { children: React.ReactNode }) {
   const [ok, setOk] = useState(false);
@@ -28,11 +31,13 @@ function DesktopOnly({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  const [phase, setPhase] = useState<'video' | 'pp' | 'main'>('video');
-  const scrollProgress = useScrollProgress();
+  // Simplified phase: 'video' (intro) → 'main'
+  const [phase, setPhase] = useState<'video' | 'main'>('video');
 
-  const handleVideoComplete = useCallback(() => setPhase('pp'), []);
-  const handlePPComplete = useCallback(() => setPhase('main'), []);
+  const handleVideoComplete = useCallback(() => setPhase('main'), []);
+
+  // Register GSAP scroll animations after main phase
+  useScrollAnimations(phase);
 
   // Lenis smooth scroll — only after main phase starts
   useEffect(() => {
@@ -44,22 +49,27 @@ export default function App() {
       smoothWheel: true,
     });
 
-    let rafId: number;
-    const raf = (time: number) => {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
-    };
-    rafId = requestAnimationFrame(raf);
+    let ctx: gsap.Context;
 
-    // Fade in main content smoothly
-    gsap.fromTo('#main-content', 
-      { opacity: 0, y: 50 }, 
-      { opacity: 1, y: 0, duration: 1.5, ease: 'power3.out', clearProps: 'transform' }
-    );
+    // Connect Lenis to GSAP ScrollTrigger
+    lenis.on('scroll', ScrollTrigger.update);
+    
+    const updateLenis = (time: number) => lenis.raf(time * 1000);
+    gsap.ticker.add(updateLenis);
+    gsap.ticker.lagSmoothing(0);
+
+    ctx = gsap.context(() => {
+      // Fade in main content smoothly
+      gsap.fromTo('#main-content', 
+        { opacity: 0, y: 50 }, 
+        { opacity: 1, y: 0, duration: 1.5, ease: 'power3.out', clearProps: 'transform' }
+      );
+    });
 
     return () => {
-      cancelAnimationFrame(rafId);
       lenis.destroy();
+      gsap.ticker.remove(updateLenis);
+      if (ctx) ctx.revert();
     };
   }, [phase]);
 
@@ -73,44 +83,45 @@ export default function App() {
         </div>
       )}
 
-      {/* Three.js always mounted — drives the persistent canvas */}
-      {phase === 'main' && <ThreeBackground scrollProgress={scrollProgress} />}
+      {/* Persistent Animated Floating Background for all non-hero sections */}
+      {phase === 'main' && <FloatingBackground />}
+
+      {/* Hero scroll canvas — Replaces ThreeBackground and covers the FloatingBackground initially */}
+      {phase === 'main' && <HeroScrollCanvas scrollHeight={HERO_SCROLL_HEIGHT} />}
 
       {/* Custom cursor — desktop only */}
       <DesktopOnly>
         <CustomCursor />
       </DesktopOnly>
 
-      {/* PP Loading Screen (Explosion) over the final frame of the video */}
-      {phase === 'pp' && <LoadingScreen onComplete={handlePPComplete} />}
-
       {/* Main content */}
-      <div
-        id="main-content"
-        style={{
-          position: 'relative',
-          zIndex: 10,
-          opacity: phase === 'main' ? 1 : 0, 
-          display: phase === 'main' ? 'block' : 'none'
-        }}
-      >
-        <Navigation />
+      {phase === 'main' && (
+        <div
+          id="main-content"
+          style={{
+            position: 'relative',
+            zIndex: 10,
+            opacity: 0, // Let GSAP handle the fade in
+          }}
+        >
+          <Navigation />
 
-        <main>
-          <HeroSection />
-          <AboutSection />
-          <SkillsSection />
-          <ExperienceSection />
-          <ProjectsSection />
-          <ServicesSection />
-          <StatisticsSection />
-          <TechStackMarquee />
-          <TestimonialsSection />
-          <ContactSection />
-        </main>
+          <main>
+            <HeroSection />
+            <AboutSection />
+            <SkillsSection />
+            <ExperienceSection />
+            <ProjectsSection />
+            <ServicesSection />
+            <StatisticsSection />
+            <TechStackMarquee />
+            <TestimonialsSection />
+            <ContactSection />
+          </main>
 
-        <Footer />
-      </div>
+          <Footer />
+        </div>
+      )}
     </div>
   );
 }

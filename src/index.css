@@ -23,12 +23,13 @@
 }
 
 @layer components {
-  /* Apple glass */
+  /* ─── Glassmorphism ─── */
   .glass {
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
   }
 
   .glass-dark {
@@ -38,15 +39,30 @@
     border: 1px solid rgba(255, 255, 255, 0.06);
   }
 
-  /* Gradient text */
+  .glass-premium {
+    background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+    backdrop-filter: blur(40px) saturate(200%);
+    -webkit-backdrop-filter: blur(40px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  /* ─── Gradient text ─── */
   .gradient-text {
-    background: linear-gradient(135deg, #4F46E5 0%, #06B6D4 100%);
+    background: linear-gradient(135deg, #6366F1 0%, #06B6D4 50%, #8B5CF6 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  /* Apple-style section titles */
+  .gradient-text-warm {
+    background: linear-gradient(135deg, #F59E0B 0%, #EF4444 50%, #EC4899 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ─── Section title ─── */
   .section-title {
     font-size: clamp(32px, 7vw, 88px);
     line-height: 1.0;
@@ -54,36 +70,57 @@
     @apply font-display font-bold text-primary;
   }
 
-  /* Pill button — filled */
-  .btn-pill {
-    @apply inline-flex items-center gap-2 px-8 py-4 rounded-full font-display font-semibold text-white bg-indigo;
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-  .btn-pill:hover {
-    background: #4338CA;
-    transform: scale(1.04);
-    box-shadow: 0 0 48px rgba(79, 70, 229, 0.35);
+  /* ─── Section dividers ─── */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.15), rgba(6, 182, 212, 0.15), transparent);
   }
 
-  /* Pill button — ghost */
+  /* ─── Pill button — filled ─── */
+  .btn-pill {
+    @apply inline-flex items-center gap-2 px-8 py-4 rounded-full font-display font-semibold text-white;
+    background: linear-gradient(135deg, #4F46E5, #6366F1);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 4px 24px rgba(79, 70, 229, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-pill::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #6366F1, #8B5CF6);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .btn-pill:hover::before { opacity: 1; }
+  .btn-pill:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 40px rgba(79, 70, 229, 0.5);
+  }
+  .btn-pill > * { position: relative; z-index: 1; }
+
+  /* ─── Pill button — ghost ─── */
   .btn-ghost {
     @apply inline-flex items-center gap-2 px-8 py-4 rounded-full font-display font-semibold text-primary;
-    border: 1.5px solid rgba(245, 245, 247, 0.2);
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    border: 1.5px solid rgba(245, 245, 247, 0.15);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
   .btn-ghost:hover {
-    border-color: rgba(245, 245, 247, 0.5);
-    background: rgba(245, 245, 247, 0.06);
+    border-color: rgba(99, 102, 241, 0.5);
+    background: rgba(99, 102, 241, 0.08);
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.15);
+    transform: translateY(-2px);
   }
 
-  /* Tilt card */
+  /* ─── Tilt card ─── */
   .tilt-card {
     transform-style: preserve-3d;
     transition: transform 0.15s ease-out;
     will-change: transform;
   }
 
-  /* Glow hover */
+  /* ─── Glow hover ─── */
   .glow-hover {
     transition: box-shadow 0.3s ease, transform 0.3s ease;
   }
@@ -92,52 +129,123 @@
     transform: translateY(-4px);
   }
 
-  /* Shimmer skeleton */
+  /* ─── Shimmer ─── */
   .shimmer {
-    background: linear-gradient(
-      90deg,
-      rgba(255,255,255,0.03) 25%,
-      rgba(255,255,255,0.08) 50%,
-      rgba(255,255,255,0.03) 75%
-    );
+    background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
     background-size: 200% 100%;
     animation: shimmer 2s linear infinite;
   }
 
-  /* Input glow */
+  /* ─── Input ─── */
   .input-apple {
     @apply w-full px-5 py-4 bg-white/5 rounded-xl text-primary placeholder-muted/40 text-sm;
     border: 1px solid rgba(255,255,255,0.08);
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
     outline: none;
   }
   .input-apple:focus {
-    border-color: #4F46E5;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+    border-color: #6366F1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15), 0 0 20px rgba(99, 102, 241, 0.1);
+    background: rgba(255,255,255,0.07);
   }
 
-  /* Progress ring */
+  /* ─── Progress ring ─── */
   .progress-ring { transform: rotate(-90deg); }
   .progress-ring circle { transition: stroke-dashoffset 1s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
 
-  /* Scroll bounce */
-  @keyframes bounce-slow {
-    0%, 100% { transform: translateY(0) translateX(-50%); }
-    50% { transform: translateY(10px) translateX(-50%); }
-  }
-
-  /* Horizontal timeline scroll */
+  /* ─── Timeline track ─── */
   .timeline-track {
     display: flex;
     transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  /* Tech chip */
+  /* ─── Tech chip ─── */
   .tech-chip {
     @apply px-3 py-1 text-xs rounded-full text-muted;
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.08);
+    transition: all 0.3s ease;
   }
+  .tech-chip:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.15);
+  }
+
+  /* ─── Ambient particles (CSS-based replacement for Three.js bg) ─── */
+  .ambient-particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: float-particle var(--duration, 8s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+  }
+
+  /* ─── Section backgrounds ─── */
+  .section-bg {
+    position: relative;
+  }
+  .section-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* ─── Scroll reveal animation classes ─── */
+  .reveal-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .reveal-up.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Keyframes ─── */
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0) translateX(-50%); }
+  50% { transform: translateY(10px) translateX(-50%); }
+}
+
+@keyframes float-particle {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+  25% { transform: translate(10px, -20px) scale(1.1); opacity: 0.5; }
+  50% { transform: translate(-5px, -40px) scale(0.9); opacity: 0.4; }
+  75% { transform: translate(15px, -20px) scale(1.05); opacity: 0.6; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.2); }
+  50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.4); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes breath {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.04); }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes rotate-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @layer utilities {

@@ -20,8 +20,14 @@ const tech = [
 
 function Item({ name, color }: { name: string; color: string }) {
   return (
-    <span className="flex items-center gap-3 px-5 text-base font-display font-medium whitespace-nowrap" style={{ color }}>
-      <span className="w-1.5 h-1.5 rounded-full" style={{ background: color }} />
+    <span
+      className="flex items-center gap-3 px-6 text-base font-display font-medium whitespace-nowrap transition-all duration-300 hover:scale-110"
+      style={{ color }}
+    >
+      <span
+        className="w-2 h-2 rounded-full flex-shrink-0"
+        style={{ background: color, boxShadow: `0 0 8px ${color}50` }}
+      />
       {name}
     </span>
   );
@@ -30,11 +36,11 @@ function Item({ name, color }: { name: string; color: string }) {
 export default function TechStackMarquee() {
   return (
     <section className="relative py-16 overflow-hidden" style={{ zIndex: 10 }}>
-      <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)' }} />
-      <div className="absolute bottom-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)' }} />
+      <div className="section-divider absolute top-0 left-0 right-0" />
+      <div className="section-divider absolute bottom-0 left-0 right-0" />
 
       {/* Row 1 */}
-      <div className="flex overflow-hidden mb-3" style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}>
+      <div className="flex overflow-hidden mb-4" style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}>
         <div className="flex animate-marquee">
           {[...tech, ...tech].map((t, i) => <Item key={i} {...t} />)}
         </div>

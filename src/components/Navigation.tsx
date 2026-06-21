@@ -38,13 +38,14 @@ export default function Navigation() {
 
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
       style={{
         zIndex: 50,
-        background: scrolled ? 'rgba(0,0,0,0.7)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'none',
-        WebkitBackdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'none',
+        background: scrolled ? 'rgba(0,0,0,0.6)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(30px) saturate(200%)' : 'none',
+        WebkitBackdropFilter: scrolled ? 'blur(30px) saturate(200%)' : 'none',
         borderBottom: scrolled ? '1px solid rgba(255,255,255,0.06)' : 'none',
+        boxShadow: scrolled ? '0 4px 30px rgba(0,0,0,0.3)' : 'none',
       }}
     >
       <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between h-16">
@@ -55,8 +56,8 @@ export default function Navigation() {
           className="flex items-center gap-2.5 group"
         >
           <div
-            className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-display font-bold"
-            style={{ background: 'linear-gradient(135deg, #4F46E5, #06B6D4)' }}
+            className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-display font-bold transition-shadow duration-300 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.5)]"
+            style={{ background: 'linear-gradient(135deg, #6366F1, #06B6D4)' }}
           >
             PP
           </div>
@@ -72,16 +73,18 @@ export default function Navigation() {
               key={link.name}
               href={link.href}
               onClick={(e) => { e.preventDefault(); smoothTo(link.href); }}
-              className="text-sm font-body transition-colors relative"
+              className="text-sm font-body transition-all duration-300 relative hover:text-primary"
               style={{ color: active === link.href.slice(1) ? '#F5F5F7' : '#86868B' }}
             >
               {link.name}
-              {active === link.href.slice(1) && (
-                <span
-                  className="absolute -bottom-1 left-0 right-0 h-px"
-                  style={{ background: 'linear-gradient(90deg, #4F46E5, #06B6D4)' }}
-                />
-              )}
+              <span
+                className="absolute -bottom-1 left-0 right-0 h-px transition-all duration-300"
+                style={{
+                  background: 'linear-gradient(90deg, #6366F1, #06B6D4)',
+                  transform: active === link.href.slice(1) ? 'scaleX(1)' : 'scaleX(0)',
+                  transformOrigin: 'center',
+                }}
+              />
             </a>
           ))}
         </div>
@@ -95,10 +98,8 @@ export default function Navigation() {
               window.open('https://mail.google.com/mail/?view=cm&fs=1&to=pankajpal01022002@gmail.com', '_blank');
             }
           }}
-          className="hidden md:flex items-center px-5 py-2 rounded-full text-sm font-display font-medium text-white transition-all duration-200"
-          style={{ background: '#4F46E5' }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = '#4338CA'; }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = '#4F46E5'; }}
+          className="hidden md:flex items-center px-5 py-2 rounded-full text-sm font-display font-medium text-white transition-all duration-300 hover:shadow-[0_0_30px_rgba(99,102,241,0.4)] hover:scale-105"
+          style={{ background: 'linear-gradient(135deg, #6366F1, #4F46E5)' }}
         >
           Hire Me
         </a>
@@ -129,7 +130,7 @@ export default function Navigation() {
         style={{
           maxHeight: mobileOpen ? '450px' : 0,
           background: 'rgba(0,0,0,0.85)',
-          backdropFilter: 'blur(20px)',
+          backdropFilter: 'blur(30px)',
         }}
       >
         <div className="px-4 py-5 space-y-4">
@@ -153,7 +154,7 @@ export default function Navigation() {
               }
             }}
             className="block w-full text-center py-3 rounded-full text-white text-sm font-display font-medium"
-            style={{ background: '#4F46E5' }}
+            style={{ background: 'linear-gradient(135deg, #6366F1, #4F46E5)' }}
           >
             Hire Me
           </a>
